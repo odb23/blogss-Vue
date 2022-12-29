@@ -13,7 +13,6 @@ checkScreen()
 function checkScreen () {
     windowWidth.value = window.innerWidth;
 
-    console.log(windowWidth)
     if (windowWidth.value <= 750) {
         mobile.value = true;
         return
