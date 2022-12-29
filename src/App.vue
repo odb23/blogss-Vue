@@ -1,5 +1,6 @@
 <script setup>
 import Navigation from './components/Navigation.vue';
+import Footer from './components/Footer.vue'
 
 // export default {
 //   name: "app",
@@ -21,6 +22,8 @@ import Navigation from './components/Navigation.vue';
     <div class="app">
       <Navigation />
       <RouterView/>
+      
+      <Footer />
     </div>
   </div>
 </template>
