@@ -28,7 +28,7 @@ import Footer from './components/Footer.vue'
   </div>
 </template>
 
-<style>
+<style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
 * {
@@ -63,12 +63,40 @@ import Footer from './components/Footer.vue'
 .arrow {
   margin-left: 8px;
   width: 12px;
-  filter: brightness(0)
+  filter: brightness(0);
 }
 
 .arrow-light {
   margin-left: 8px;
   width: 12px;
-  filter: brightness(0) invert(1)
+  filter: brightness(0) invert(1);
+}
+
+
+.blog-card-wrap {
+  position: relative;
+  padding: 80px 16px;
+  background-color: #f1f1f1;
+
+  @media (min-width: 500px){
+    padding: 100px 16px;
+  }
+
+  .blog-cards {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 1fr;
+
+    @media (min-width: 500px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 900px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
 }
 </style>
