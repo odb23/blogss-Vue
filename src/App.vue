@@ -59,4 +59,16 @@ import Footer from './components/Footer.vue'
 .link-light {
   color: #fff;
 }
+
+.arrow {
+  margin-left: 8px;
+  width: 12px;
+  filter: brightness(0)
+}
+
+.arrow-light {
+  margin-left: 8px;
+  width: 12px;
+  filter: brightness(0) invert(1)
+}
 </style>
