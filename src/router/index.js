@@ -8,15 +8,26 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        title: "Home"
+      }
     },
     {
       path: '/blogs',
       name: 'Blogs',
-      component: BlogView
+      component: BlogView,
+      meta: {
+        title: "Blogs"
+      }
     },
   
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title} | ODBlogss`;
+  next()
 })
 
 export default router
