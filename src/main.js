@@ -1,15 +1,19 @@
-import { createApp } from 'vue'
-// import {Vue2Editor} from "vue2-editor"
+import { createApp } from "vue";
 
-import App from './App.vue'
-import router from './router'
-import stores from './stores'
+import App from "./App.vue";
+import router from "./router";
+import stores from "./stores";
+import { auth } from "./firebase/firebaseInit";
 
+let app;
 
-const app = createApp(App)
+auth.onAuthStateChanged(() => {
+  if (!app) {
+    app = createApp(App);
 
-app.use(router)
-app.use(stores)
-// app.use(Vue2Editor)
+    app.use(router);
+    app.use(stores);
 
-app.mount('#app')
+    app.mount("#app");
+  }
+});

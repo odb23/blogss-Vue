@@ -12,8 +12,11 @@
                     <img :src="Email" alt="" class="icon">
                 </div>
                 <div class="input">
-                    <input type="pasword" placeholder="Password" v-model="password">
+                    <input type="password" placeholder="Password" v-model="password">
                     <img :src="Password" alt="" class="icon">
+                </div>
+                <div class="error" v-show="error">
+                    {{ errorMessage }}
                 </div>
             </div>
 
@@ -21,21 +24,43 @@
                 Forgot your password?
             </RouterLink>
 
-            <button>Sign In</button>
+            <button @click.prevent="signIn">Sign In</button>
             <div class="angle"></div>
         </form>
-        <div class="background">
-
-        </div>
+        <div class="background"></div>
     </div>
 </template>
 <script setup>
 import { ref } from "vue"
+import { useRouter } from "vue-router";
 import Email from "../assets/Icons/envelope-regular.svg"
 import Password from "../assets/Icons/lock-alt-solid.svg"
+import { authenticateUserWithEmailPassword } from "../services/firebase"
 
 let email = ref(null)
 let password = ref(null)
+let error = ref(false)
+let errorMessage = ref("");
+const router = useRouter()
+
+async function signIn() {
+    try {
+        error.value = false
+        errorMessage = ""
+
+        authenticateUserWithEmailPassword({
+            email: email.value,
+            password: password.value
+        })
+
+        router.push({
+            name: "Home"
+        })
+    } catch (err) {
+        error.value = true
+        errorMessage.value = err.message
+    }
+}
 
 </script>
 <style lang="scss" >
@@ -106,6 +131,7 @@ let password = ref(null)
                         outline: none;
                     }
                 }
+
                 .icon {
                     width: 12px;
                     position: absolute;
@@ -128,7 +154,7 @@ let password = ref(null)
             }
         }
 
-        .angle{
+        .angle {
             display: none;
             position: absolute;
             background-color: #fff;
@@ -136,6 +162,7 @@ let password = ref(null)
             width: 60px;
             right: -30px;
             height: 101%;
+
             @media (min-width: 900px) {
                 display: initial;
             }
@@ -149,6 +176,7 @@ let password = ref(null)
         background-image: url("../assets/background.png");
         width: 100%;
         height: 100%;
+
         @media (min-width: 900px) {
             display: initial
         }

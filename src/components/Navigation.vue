@@ -64,8 +64,6 @@ function toggleMobileNav (){
     </header>
 </template>
 
-
-
 <style lang="scss" scoped>
 header {
     background-color: #fff;
@@ -159,7 +157,5 @@ header {
     .mobile-nav-enter-to, .mobile-nav-leave {
         transform: translateX(0px);
     }
-
-
 }
 </style>

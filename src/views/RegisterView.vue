@@ -2,7 +2,7 @@
     <div class="form-wrap">
         <form action="" class="register">
             <p class="login-register">
-               Already have an account?
+                Already have an account?
                 <RouterLink class="router-link" :to="{ name: 'Login' }">Log In</RouterLink>
             </p>
             <h2>Create your ODBlogss account</h2>
@@ -24,12 +24,15 @@
                     <img :src="Email" alt="" class="icon">
                 </div>
                 <div class="input">
-                    <input type="pasword" placeholder="Password" v-model="password">
+                    <input type="password" placeholder="Password" v-model="password">
                     <img :src="Password" alt="" class="icon">
+                </div>
+                <div class="error" v-show="error">
+                    {{ errorMessage }}
                 </div>
             </div>
 
-            <button>Sign Up</button>
+            <button @click.prevent="register">Sign Up</button>
             <div class="angle"></div>
         </form>
         <div class="background">
@@ -37,17 +40,48 @@
         </div>
     </div>
 </template>
+
 <script setup>
 import { ref } from "vue"
+import { useRouter } from "vue-router";
 import Email from "../assets/Icons/envelope-regular.svg"
 import Password from "../assets/Icons/lock-alt-solid.svg"
 import User from "../assets/Icons/user-alt-light.svg"
+import { registerUser } from "../services/firebase";
 
-let email = ref(null)
-let password = ref(null)
-let firstName= ref(null)
-let lastName = ref(null)
-let username = ref(null)
+let email = ref("")
+let password = ref("")
+let firstName = ref("")
+let lastName = ref("")
+let username = ref("")
+let error = ref(false)
+let errorMessage = ref("")
+
+const router = useRouter()
+
+async function register() {
+
+    try {
+        error.value = false;
+        errorMessage.value = ""
+
+        await registerUser({
+            firstName: firstName.value,
+            lastName: lastName.value,
+            email: email.value,
+            username: username.value,
+            password: password.value
+        })
+
+        router.push({
+            name: 'Home'
+        })
+
+    } catch (e) {
+        error.value = true;
+        errorMessage.value = e.message
+    }
+}
 
 </script>
 <style lang="scss" scoped>
