@@ -43,8 +43,8 @@ function toggleMobileNav (){
 
             <div class="nav-links" v-show="!mobile">
                 <ul>
-                    <RouterLink class="link" to="#">Home</RouterLink>
-                    <RouterLink class="link" to="#">Blogs</RouterLink>
+                    <RouterLink class="link" :to="{ name: 'Home' }">Home</RouterLink>
+                    <RouterLink class="link" :to="{ name: 'Blogs' }">Blogs</RouterLink>
                     <RouterLink class="link" to="#">Create Post</RouterLink>
                     <RouterLink class="link" to="#">Login/Register</RouterLink>
                 </ul>
@@ -55,8 +55,8 @@ function toggleMobileNav (){
 
         <Transition name="mobile-nav" >
             <ul class="mobile-nav" v-show="mobileNav"> 
-                    <RouterLink class="link" to="#">Home</RouterLink>
-                    <RouterLink class="link" to="#">Blogs</RouterLink>
+                    <RouterLink class="link" :to="{ name: 'Home' }">Home</RouterLink>
+                    <RouterLink class="link" :to="{ name: 'Blogs' }">Blogs</RouterLink>
                     <RouterLink class="link" to="#">Create Post</RouterLink>
                     <RouterLink class="link" to="#">Login/Register</RouterLink>
                 </ul>

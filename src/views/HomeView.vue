@@ -1,8 +1,9 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import BlogPost from "../components/BlogPost.vue"
 import BlogCard from '../components/BlogCard.vue';
 import Arrow from "../assets/Icons/arrow-right-light.svg"
+import $store from "../stores"
 
 
 let welcomeScreen = reactive({
@@ -26,23 +27,7 @@ let smapleBlogPosts = reactive([
   }
 ])
 
-let sampleBlogCards = reactive([
-  {
-    blogTitle: "Blog Card #1",
-    blogCoverPhoto: "stock-1",
-    blogDate: "May 1, 2023",
-  },
-  {
-    blogTitle: "Blog Card #2", blogCoverPhoto: "stock-2", blogDate: "May 1, 2023",
-  },
-  {
-    blogTitle: "Blog Card #3", blogCoverPhoto: "stock-3", blogDate: "May 1, 2023",
-  },
-  {
-    blogTitle: "Blog Card #4", blogCoverPhoto: "stock-4", blogDate: "May 1, 2023",
-  }
-])
-
+let sampleBlogCards = computed(( ) => $store.state.sampleBlogCards)
 </script>
 
 <template>

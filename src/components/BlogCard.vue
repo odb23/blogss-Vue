@@ -1,6 +1,6 @@
 <template>
     <div class="blog-card">
-        <div class="icons">
+        <div class="icons" v-show="editPost">
             <div class="icon">
                 <img  alt="" class="edit" :src="Edit">
             </div>
@@ -25,9 +25,13 @@ import Arrow from "../assets/Icons/arrow-right-light.svg"
 import Edit from "../assets/Icons/edit-regular.svg"
 import Delete from "../assets/Icons/trash-regular.svg"
 import {RouterLink} from 'vue-router'
+import stores from "../stores";
+import { computed } from "vue";
 
 const props = defineProps(['post'])
 const imageURL = new URL(`../assets/blogCards/${props.post.blogCoverPhoto}.jpg`, import.meta.url).href
+
+let editPost = computed(() => stores.state.editPost)
 
 </script>
 
