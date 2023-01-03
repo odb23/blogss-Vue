@@ -1,29 +1,32 @@
 <script setup>
+import { ref, watch } from "vue"
+import { useRoute } from "vue-router";
 import Navigation from './components/Navigation.vue';
 import Footer from './components/Footer.vue'
 
-// export default {
-//   name: "app",
-//   components: {
-//     Navigation
-//   },
-//   data() {
-//     return {};
-//   },
-//   created() {},
-//   mounted() {},
-//   methods: {},
-//   watch: {},
-// };
+let navigationDisabled = ref(null)
+const route = useRoute()
+
+function checkRoute() {
+  if (route.name === "Register" || route.name === "Login" || route.name === "ForgotPassword") {
+    navigationDisabled.value = true
+    return
+  }
+
+  navigationDisabled.value = false
+}
+
+watch(route, function() {
+  checkRoute()
+})
 </script>
 
 <template>
   <div class="app-wrapper">
     <div class="app">
-      <Navigation />
-      <RouterView/>
-      
-      <Footer />
+      <Navigation v-if="!navigationDisabled"/>
+      <RouterView />
+      <Footer  v-if="!navigationDisabled"/>
     </div>
   </div>
 </template>
@@ -83,9 +86,11 @@ button,
   border-radius: 20px;
   border: none;
   text-transform: uppercase;
+
   &:focus {
     outline: none;
   }
+
   &:hover {
     background-color: rgba(48, 48, 48, 0.7);
   }
@@ -100,24 +105,29 @@ button,
   font-size: 15px;
   font-weight: 500;
   background-color: transparent;
+
   @media (min-width: 700px) {
     margin-top: 0;
     margin-left: auto;
   }
+
   i {
     margin-left: 8px;
   }
 }
+
 .button-light {
   background-color: transparent;
   border: 2px solid #fff;
   color: #fff;
 }
+
 .button-inactive {
   pointer-events: none !important;
   cursor: none !important;
   background-color: rgba(128, 128, 128, 0.5) !important;
 }
+
 .error {
   text-align: center;
   font-size: 12px;
@@ -129,7 +139,7 @@ button,
   padding: 80px 16px;
   background-color: #f1f1f1;
 
-  @media (min-width: 500px){
+  @media (min-width: 500px) {
     padding: 100px 16px;
   }
 
@@ -141,14 +151,15 @@ button,
     @media (min-width: 500px) {
       grid-template-columns: repeat(2, 1fr);
     }
+
     @media (min-width: 900px) {
       grid-template-columns: repeat(3, 1fr);
     }
+
     @media (min-width: 1200px) {
       grid-template-columns: repeat(4, 1fr);
     }
   }
 
 }
-
 </style>
