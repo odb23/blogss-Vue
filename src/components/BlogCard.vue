@@ -27,7 +27,6 @@ import Delete from "../assets/Icons/trash-regular.svg"
 import {RouterLink} from 'vue-router'
 
 const props = defineProps(['post'])
-console.log(props)
 const imageURL = new URL(`../assets/blogCards/${props.post.blogCoverPhoto}.jpg`, import.meta.url).href
 
 </script>
