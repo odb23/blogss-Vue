@@ -46,7 +46,7 @@ function toggleMobileNav (){
                     <RouterLink class="link" :to="{ name: 'Home' }">Home</RouterLink>
                     <RouterLink class="link" :to="{ name: 'Blogs' }">Blogs</RouterLink>
                     <RouterLink class="link" to="#">Create Post</RouterLink>
-                    <RouterLink class="link" to="#">Login/Register</RouterLink>
+                    <RouterLink class="link" :to="{ name: 'Login' }">Login/Register</RouterLink>
                 </ul>
             </div>
         </nav>
@@ -58,7 +58,7 @@ function toggleMobileNav (){
                     <RouterLink class="link" :to="{ name: 'Home' }">Home</RouterLink>
                     <RouterLink class="link" :to="{ name: 'Blogs' }">Blogs</RouterLink>
                     <RouterLink class="link" to="#">Create Post</RouterLink>
-                    <RouterLink class="link" to="#">Login/Register</RouterLink>
+                    <RouterLink class="link" :to="{ name: 'Login' }">Login/Register</RouterLink>
                 </ul>
         </Transition>
     </header>
