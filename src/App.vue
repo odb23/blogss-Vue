@@ -3,9 +3,22 @@ import { ref, watch } from "vue"
 import { useRoute } from "vue-router";
 import Navigation from './components/Navigation.vue';
 import Footer from './components/Footer.vue'
+import { auth } from "./firebase/firebaseInit";
+import { useStore } from "vuex";
+
 
 let navigationDisabled = ref(null)
 const route = useRoute()
+const store = useStore()
+
+auth.onAuthStateChanged((user) => {
+  store.commit("updateUser", user)
+  
+  if (user) {
+    store.dispatch("getCurrentUser", user);
+  }
+});
+checkRoute();
 
 function checkRoute() {
   if (route.name === "Register" || route.name === "Login" || route.name === "ForgotPassword") {
@@ -16,7 +29,7 @@ function checkRoute() {
   navigationDisabled.value = false
 }
 
-watch(route, function() {
+watch(route, function () {
   checkRoute()
 })
 </script>
@@ -24,9 +37,9 @@ watch(route, function() {
 <template>
   <div class="app-wrapper">
     <div class="app">
-      <Navigation v-if="!navigationDisabled"/>
+      <Navigation v-if="!navigationDisabled" />
       <RouterView />
-      <Footer  v-if="!navigationDisabled"/>
+      <Footer v-if="!navigationDisabled" />
     </div>
   </div>
 </template>

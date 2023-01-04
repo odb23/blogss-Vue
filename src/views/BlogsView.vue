@@ -13,21 +13,23 @@
 </template>
 <script setup>
 import { computed, onBeforeUnmount } from 'vue';
-import stores from '../stores';
 import BlogCard from '../components/BlogCard.vue';
+import { useStore } from 'vuex';
 
-let sampleBlogCards = computed(()=> stores.state.sampleBlogCards)
+const store = useStore() 
+
+let sampleBlogCards = computed(()=> store.state.sampleBlogCards)
 let editPost = computed({
     get() {
-        return stores.state.editPost
+        return store.state.editPost
     },
     set(payload) {
-        stores.commit("toggleEditPost", payload)
+        store.commit("toggleEditPost", payload)
     }
 })
 
 onBeforeUnmount(() => {
-    stores.commit("toggleEditPost", false)
+    store.commit("toggleEditPost", false)
 })
 </script>
 

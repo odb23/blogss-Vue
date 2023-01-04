@@ -1,4 +1,5 @@
 import Vuex from "vuex";
+import { getCurrentUser } from "../services/user";
 
 export default new Vuex.Store({
   state: {
@@ -24,13 +25,40 @@ export default new Vuex.Store({
         blogDate: "May 1, 2023",
       },
     ],
-    editPost: false
+    editPost: false,
+    user: null,
+    profileAdmin: null,
+    profileEmail: null,
+    profileFirstName: null,
+    profileLastName: null,
+    profileUsername: null,
+    profileId: null,
+    profileInitials: null,
   },
   mutations: {
     toggleEditPost(state, payload) {
-      state.editPost = payload
-    }
+      state.editPost = payload;
+    },
+    updateUser(state, payload ) {
+      state.user = payload
+    },
+    setProfileInfo(state, doc) {
+      state.profileId = doc.id;
+      state.profileEmail = doc.data().email;
+      state.profileFirstName = doc.data().firstName;
+      state.profileLastName = doc.data().lastName;
+      state.profileUsername = doc.data().username;
+    },
+    setProfileInitials(state) {
+      state.profileInitials =
+        state.profileFirstName.match(/(\b\S)?/g).join("") +
+        state.profileLastName.match(/(\b\S)?/g).join("");
+    },
   },
-  actions: {},
+  actions: {
+    async getCurrentUser({ commit }) {
+      await getCurrentUser(commit);
+    },
+  },
   modules: {},
 });

@@ -25,13 +25,14 @@ import Arrow from "../assets/Icons/arrow-right-light.svg"
 import Edit from "../assets/Icons/edit-regular.svg"
 import Delete from "../assets/Icons/trash-regular.svg"
 import {RouterLink} from 'vue-router'
-import stores from "../stores";
 import { computed } from "vue";
+import { useStore } from "vuex";
 
 const props = defineProps(['post'])
 const imageURL = new URL(`../assets/blogCards/${props.post.blogCoverPhoto}.jpg`, import.meta.url).href
+const store = useStore()
 
-let editPost = computed(() => stores.state.editPost)
+let editPost = computed(() => store.state.editPost)
 
 </script>
 

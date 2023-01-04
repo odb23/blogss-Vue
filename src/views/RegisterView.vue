@@ -47,7 +47,7 @@ import { useRouter } from "vue-router";
 import Email from "../assets/Icons/envelope-regular.svg"
 import Password from "../assets/Icons/lock-alt-solid.svg"
 import User from "../assets/Icons/user-alt-light.svg"
-import { registerUser } from "../services/firebase";
+import { registerUser } from "../services/user";
 
 let email = ref("")
 let password = ref("")

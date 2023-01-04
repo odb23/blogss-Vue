@@ -31,7 +31,7 @@ import { ref } from "vue"
 import Email from "../assets/Icons/envelope-regular.svg"
 import Modal from "../components/Modal.vue";
 import Loading from "../components/Loading.vue"
-import {resetUserPasswordWithEmail} from "../services/firebase"
+import {resetUserPasswordWithEmail} from "../services/user"
 
 let email = ref("")
 let showModal = ref(false);

@@ -3,7 +3,10 @@ import { reactive, computed } from 'vue';
 import BlogPost from "../components/BlogPost.vue"
 import BlogCard from '../components/BlogCard.vue';
 import Arrow from "../assets/Icons/arrow-right-light.svg"
-import $store from "../stores"
+import { useStore } from 'vuex';
+
+
+let $store = useStore()
 
 
 let welcomeScreen = reactive({

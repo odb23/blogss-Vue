@@ -4,8 +4,10 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import db, { auth } from "../firebase/firebaseInit";
+
+const USERS_PATH = "users";
 
 const registerUser = async (user) => {
   const { firstName, lastName, email, username, password } = user;
@@ -24,7 +26,7 @@ const registerUser = async (user) => {
         password
       );
 
-      await setDoc(doc(db, "users", createdUser.user.uid), {
+      await setDoc(doc(db, USERS_PATH, createdUser.user.uid), {
         firstName,
         lastName,
         email,
@@ -55,12 +57,22 @@ const resetUserPasswordWithEmail = (email) => {
   sendPasswordResetEmail(auth, email)
     .then()
     .catch((e) => {
-      throw e
+      throw e;
     });
+};
+
+const getCurrentUser = async (commit) => {
+  try {
+    const dbRes = await getDoc(doc(auth, USERS_PATH, auth.currentUser.uid));
+
+    commit("setProfileInfo", dbRes);
+    commit("setProfileInitials");
+  } catch (e) {}
 };
 
 export {
   registerUser,
   authenticateUserWithEmailPassword,
   resetUserPasswordWithEmail,
+  getCurrentUser
 };
