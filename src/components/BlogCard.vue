@@ -48,7 +48,7 @@ let editPost = computed(() => store.state.editPost)
     transition: .5s ease-in all;
     &:hover {
         transform: rotateZ(-1deg) scale(1.01);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.6);
+       box-shadow : 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.6);
     
     }
 

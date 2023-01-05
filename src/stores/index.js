@@ -56,7 +56,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getCurrentUser({ commit }) {
+    async getCurrentUser({ commit }, user) {
       await getCurrentUser(commit);
     },
   },

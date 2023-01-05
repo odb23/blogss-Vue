@@ -13,6 +13,7 @@ const store = useStore()
 
 auth.onAuthStateChanged((user) => {
   store.commit("updateUser", user)
+
   
   if (user) {
     store.dispatch("getCurrentUser", user);

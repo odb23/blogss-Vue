@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import db, { auth } from "../firebase/firebaseInit";
@@ -63,16 +64,33 @@ const resetUserPasswordWithEmail = (email) => {
 
 const getCurrentUser = async (commit) => {
   try {
-    const dbRes = await getDoc(doc(auth, USERS_PATH, auth.currentUser.uid));
+    console.log(auth.currentUser.uid)
+    const dbRes = await getDoc(doc(db, USERS_PATH, auth.currentUser.uid));
+    
+    if (dbRes.exists()) {
+      console.log("Document data:", dbRes);
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
 
     commit("setProfileInfo", dbRes);
     commit("setProfileInitials");
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
 };
+
+
+const userSignOut = async () => {
+  await signOut(auth)
+  window.location.reload()
+}
 
 export {
   registerUser,
   authenticateUserWithEmailPassword,
   resetUserPasswordWithEmail,
-  getCurrentUser
+  getCurrentUser,
+  userSignOut
 };

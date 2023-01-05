@@ -46,9 +46,9 @@ const router = useRouter()
 async function signIn() {
     try {
         error.value = false
-        errorMessage = ""
+        errorMessage.value = ""
 
-        authenticateUserWithEmailPassword({
+        await authenticateUserWithEmailPassword({
             email: email.value,
             password: password.value
         })
@@ -57,6 +57,7 @@ async function signIn() {
             name: "Home"
         })
     } catch (err) {
+        console.log(err.message)
         error.value = true
         errorMessage.value = err.message
     }
