@@ -4,7 +4,7 @@ import MenuIcon from '../assets/Icons/bars-regular.svg'
 import User from "../assets/Icons/user-alt-light.svg"
 import Admin from "../assets/Icons/user-crown-light.svg"
 import SignOut from "../assets/Icons/sign-out-alt-regular.svg"
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex';
 import {userSignOut} from "../services/user"
 
@@ -15,6 +15,8 @@ const mobileNav = ref(null)
 const windowWidth = ref(null)
 const profileMenu = ref(false)
 const profile = ref(null)
+
+let user = computed(() => store.state.user)
 
 window.addEventListener("resize", checkScreen);
 checkScreen()
@@ -58,10 +60,10 @@ async function signOut () {
                     <RouterLink class="link" :to="{ name: 'Home' }">Home</RouterLink>
                     <RouterLink class="link" :to="{ name: 'Blogs' }">Blogs</RouterLink>
                     <RouterLink class="link" to="#">Create Post</RouterLink>
-                    <RouterLink class="link" :to="{ name: 'Login' }">Login/Register</RouterLink>
+                    <RouterLink v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</RouterLink>
                 </ul>
 
-                <div @click="toggleProfileMenu" class="profile" ref="profile">
+                <div v-if="user" @click="toggleProfileMenu" class="profile" ref="profile">
                     <span>{{ store.state.profileInitials }}</span>
 
                     <div v-show="profileMenu" class="profile-menu">
@@ -107,7 +109,7 @@ async function signOut () {
                 <RouterLink class="link" :to="{ name: 'Home' }">Home</RouterLink>
                 <RouterLink class="link" :to="{ name: 'Blogs' }">Blogs</RouterLink>
                 <RouterLink class="link" to="#">Create Post</RouterLink>
-                <RouterLink class="link" :to="{ name: 'Login' }">Login/Register</RouterLink>
+                <RouterLink v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</RouterLink>
             </ul>
         </Transition>
     </header>

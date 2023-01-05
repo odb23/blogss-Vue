@@ -53,6 +53,11 @@ import twitter from "../assets/Icons/twitter-brands.svg";
 import instagram from "../assets/Icons/instagram-brands.svg";
 import linkedin from "../assets/Icons/linkedin-brands.svg";
 
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+let store = useStore()
+let user = computed(() => store.state.user)
 </script>
 
 <style lang="scss" scoped>

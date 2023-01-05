@@ -5,8 +5,7 @@ import BlogCard from '../components/BlogCard.vue';
 import Arrow from "../assets/Icons/arrow-right-light.svg"
 import { useStore } from 'vuex';
 
-
-let $store = useStore()
+const $store = useStore()
 
 
 let welcomeScreen = reactive({
@@ -31,11 +30,12 @@ let smapleBlogPosts = reactive([
 ])
 
 let sampleBlogCards = computed(( ) => $store.state.sampleBlogCards)
+let user = computed(() => $store.state.user)
 </script>
 
 <template>
   <main>
-    <BlogPost :post="welcomeScreen" />
+    <BlogPost v-if="!user" :post="welcomeScreen" />
     <BlogPost v-for="(post, idx) in smapleBlogPosts" :key="idx" :post="post" />
 
     <div class="blog-card-wrap">
@@ -47,7 +47,7 @@ let sampleBlogCards = computed(( ) => $store.state.sampleBlogCards)
       </div>
     </div>
 
-    <div class="updates">
+    <div class="updates" v-if="!user">
       <div class="container">
         <h2>
           Never miss a post. Register for your free account

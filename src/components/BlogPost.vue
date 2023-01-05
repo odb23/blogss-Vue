@@ -1,5 +1,5 @@
 <template>
-    <div class="blog-wrapper no-user">
+    <div class="blog-wrapper" :class="{'no-user': !user}">
         <div class="blog-content">
             <div>
                 <h2 v-if="post.welcomeScreen">{{ post.title }}</h2>
@@ -25,9 +25,13 @@
 </template>
 
 <script setup>
+import {computed} from "vue"
+import { useStore } from "vuex";
 import arrow from "../assets/Icons/arrow-right-light.svg"
 
 const props = defineProps(['post'])
+const store = useStore()
+const user = computed(() => store.state.user)
 
 const imageURL = new URL(props.post.welcomeScreen
     ? `../assets/blogPhotos/${props.post.photo}.jpg`
