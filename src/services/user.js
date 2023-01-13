@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import db, { auth } from "../firebase/firebaseInit";
 
 const USERS_PATH = "users";
@@ -64,12 +64,9 @@ const resetUserPasswordWithEmail = (email) => {
 
 const getCurrentUser = async (commit) => {
   try {
-    console.log(auth.currentUser.uid)
     const dbRes = await getDoc(doc(db, USERS_PATH, auth.currentUser.uid));
-    
-    if (dbRes.exists()) {
-      console.log("Document data:", dbRes);
-    } else {
+
+    if (!dbRes.exists()) {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
@@ -77,20 +74,37 @@ const getCurrentUser = async (commit) => {
     commit("setProfileInfo", dbRes);
     commit("setProfileInitials");
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 
-
 const userSignOut = async () => {
-  await signOut(auth)
-  window.location.reload()
-}
+  await signOut(auth);
+  window.location.reload();
+};
+
+const updateUserSettings = async (commit, state) => {
+  try {
+    const docRef = doc(db, USERS_PATH, auth.currentUser.uid);
+    console.log(state)
+    db;
+    await updateDoc(docRef, {
+      firstName: state.profileFirstName,
+      lastName: state.profileLastName,
+      username: state.profileUsername,
+    });
+    commit("setProfileInitials");
+  } catch (e) {
+    console.log(e);
+    throw Error("Error occurred while updating user !");
+  }
+};
 
 export {
   registerUser,
   authenticateUserWithEmailPassword,
   resetUserPasswordWithEmail,
   getCurrentUser,
-  userSignOut
+  userSignOut,
+  updateUserSettings,
 };

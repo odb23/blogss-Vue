@@ -79,13 +79,13 @@ async function signOut () {
                         </div>
                         <div class="options">
                             <div class="option">
-                                <RouterLink class="option"  to="#">
+                                <RouterLink class="option"  :to="{name: 'Profile'}">
                                     <img class="icon" :src="User" alt="">
                                     <p>Profile</p>
                                 </RouterLink>
                             </div>
                             <div class="option">
-                                <RouterLink class="option"  to="#">
+                                <RouterLink class="option"  :to="{name: 'Admin'}">
                                     <img class="icon" :src="Admin" alt="">
                                     <p>Admin</p>
                                 </RouterLink>

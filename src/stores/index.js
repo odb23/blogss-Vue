@@ -1,5 +1,5 @@
 import Vuex from "vuex";
-import { getCurrentUser } from "../services/user";
+import { getCurrentUser, updateUserSettings } from "../services/user";
 
 export default new Vuex.Store({
   state: {
@@ -54,11 +54,23 @@ export default new Vuex.Store({
         state.profileFirstName.match(/(\b\S)?/g).join("") +
         state.profileLastName.match(/(\b\S)?/g).join("");
     },
+    updateFirstName(state, payload) {
+      state.profileFirstName = payload
+    },
+    updateLastName(state, payload) {
+      state.profileLastName = payload
+    },
+    updateUsername(state, payload) {
+      state.profileUsername = payload
+    },
   },
   actions: {
     async getCurrentUser({ commit }, user) {
       await getCurrentUser(commit);
     },
+    async updateUserSettings({commit, state}) {
+      await updateUserSettings(commit, state)
+    }
   },
   modules: {},
 });
