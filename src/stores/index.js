@@ -29,7 +29,7 @@ export default new Vuex.Store({
     blogTitle: "",
     blogPhotoName: "",
     blogPhotoFileURL: null,
-    blogPhotoPreview: null,
+    blogPhotoPreview: false,
     editPost: false,
     user: null,
     profileAdmin: null,
@@ -52,6 +52,9 @@ export default new Vuex.Store({
     },
     createFileURL(state, paylaod) {
       state.blogPhotoFileURL = paylaod
+    },
+    openPhotoPreview(state) {
+      state.blogPhotoPreview = !state.blogPhotoPreview
     },
     toggleEditPost(state, payload) {
       state.editPost = payload;

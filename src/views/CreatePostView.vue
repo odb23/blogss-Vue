@@ -1,5 +1,6 @@
 <template >
   <div class="create-post">
+    <BlogCoverPreview v-show="$store.state.blogPhotoPreview"/>
     <div class="container">
       <div :class="{ invsible: !error }" class="err-message">
         <p>
@@ -13,7 +14,7 @@
           <label for="blog-photo">Upload Cover Photo</label>
           <input type="file" ref="blogPhoto" id="blog-photo" accept="image/png, image/gif, image/jpeg"
             @change="fileChange">
-          <button class="preview" :class="{ 'button-inactive': !blogPhotoFileURL}">Preview Photo</button>
+          <button class="preview" :class="{ 'button-inactive': !blogPhotoFileURL}" @click="openPreview">Preview Photo</button>
           <span>File Chosen: {{ blogPhotoName }} </span>
         </div>
       </div>
@@ -37,6 +38,7 @@
 <script setup>
 import { ref,  computed } from "vue";
 import { useStore } from "vuex"
+import BlogCoverPreview from "../components/BlogCoverPreview.vue";
 
 import Quill from "quill"
 import ImageResize from '@taoqf/quill-image-resize-module';
@@ -76,13 +78,16 @@ const blogHTML = computed({
   set(payload) { $store.commit("newBlogPost", payload) }
 })
 
-
 function fileChange() {
   file.value = blogPhoto.value.files[0]
   const fileName = file.value.name
 
   $store.commit("fileNameChange", fileName)
   $store.commit("createFileURL", URL.createObjectURL(file.value))  
+}
+
+function openPreview() {
+    $store.commit("openPhotoPreview");
 }
 
 </script>
