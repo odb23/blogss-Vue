@@ -25,6 +25,11 @@ export default new Vuex.Store({
         blogDate: "May 1, 2023",
       },
     ],
+    blogHTML: "Write your blog title here",
+    blogTitle: "",
+    blogPhotoName: "",
+    blogPhotoFileURL: null,
+    blogPhotoPreview: null,
     editPost: false,
     user: null,
     profileAdmin: null,
@@ -36,11 +41,23 @@ export default new Vuex.Store({
     profileInitials: null,
   },
   mutations: {
+    newBlogPost(state, payload) {
+      state.blogHTML = payload;
+    },
+    updateBlogTitle(state, payload) {
+      state.blogTitle = payload;
+    },
+    fileNameChange(state, payload) {
+      state.blogPhotoName = payload
+    },
+    createFileURL(state, paylaod) {
+      state.blogPhotoFileURL = paylaod
+    },
     toggleEditPost(state, payload) {
       state.editPost = payload;
     },
-    updateUser(state, payload ) {
-      state.user = payload
+    updateUser(state, payload) {
+      state.user = payload;
     },
     setProfileInfo(state, doc) {
       state.profileId = doc.id;
@@ -55,22 +72,22 @@ export default new Vuex.Store({
         state.profileLastName.match(/(\b\S)?/g).join("");
     },
     updateFirstName(state, payload) {
-      state.profileFirstName = payload
+      state.profileFirstName = payload;
     },
     updateLastName(state, payload) {
-      state.profileLastName = payload
+      state.profileLastName = payload;
     },
     updateUsername(state, payload) {
-      state.profileUsername = payload
+      state.profileUsername = payload;
     },
   },
   actions: {
     async getCurrentUser({ commit }, user) {
       await getCurrentUser(commit);
     },
-    async updateUserSettings({commit, state}) {
-      await updateUserSettings(commit, state)
-    }
+    async updateUserSettings({ commit, state }) {
+      await updateUserSettings(commit, state);
+    },
   },
   modules: {},
 });

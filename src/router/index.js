@@ -6,6 +6,7 @@ import Registerview from "../views/RegisterView.vue"
 import ForgotPasswordView from "../views/ForgotPasswordView.vue"
 import ProfileView from "../views/ProfileView.vue"
 import AdminView from "../views/AdminView.vue"
+import CreatePostView from "../views/CreatePostView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +65,14 @@ const router = createRouter({
       component: AdminView,
       meta: {
         title: "Manage Admins"
+      }
+    },
+    {
+      path: '/create-post',
+      name: 'CreatePost',
+      component: CreatePostView,
+      meta: {
+        title: "Create Post"
       }
     },
   ]

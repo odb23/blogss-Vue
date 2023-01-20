@@ -59,7 +59,7 @@ async function signOut () {
                 <ul v-show="!mobile">
                     <RouterLink class="link" :to="{ name: 'Home' }">Home</RouterLink>
                     <RouterLink class="link" :to="{ name: 'Blogs' }">Blogs</RouterLink>
-                    <RouterLink class="link" to="#">Create Post</RouterLink>
+                    <RouterLink class="link" :to="{ name: 'CreatePost' }">Create Post</RouterLink>
                     <RouterLink v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</RouterLink>
                 </ul>
 

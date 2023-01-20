@@ -14,7 +14,7 @@ const store = useStore()
 auth.onAuthStateChanged((user) => {
   store.commit("updateUser", user)
 
-  
+
   if (user) {
     store.dispatch("getCurrentUser", user);
   }
@@ -146,6 +146,28 @@ button,
   text-align: center;
   font-size: 12px;
   color: red;
+}
+
+.quillWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ql-formats { 
+  vertical-align: middle !important;
+}
+
+.ql-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ql-editor {
+  padding: 20px 15px 30px;
 }
 
 .blog-card-wrap {
