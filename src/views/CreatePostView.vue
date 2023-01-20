@@ -29,7 +29,7 @@
         <button>
           Publish Blog
         </button>
-        <RouterLink class="router-button" to="#">
+        <RouterLink class="router-button" :to="{name: 'PostPreview'}">
           Post Preview
         </RouterLink>
       </div>
@@ -182,7 +182,8 @@ function imageHandler(file, Editor, cursorLocation, resetUploader) {
     margin-bottom: 32px;
 
     input:nth-child(1) {
-      min-width: 300px;
+      min-width: 320px;
+      font-size: 16px;
     }
 
     input {
