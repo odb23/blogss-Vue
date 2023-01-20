@@ -1,6 +1,6 @@
 <template >
   <div class="create-post">
-    <BlogCoverPreview v-show="$store.state.blogPhotoPreview"/>
+    <BlogCoverPreview v-show="$store.state.blogPhotoPreview" />
     <div class="container">
       <div :class="{ invsible: !error }" class="err-message">
         <p>
@@ -14,13 +14,15 @@
           <label for="blog-photo">Upload Cover Photo</label>
           <input type="file" ref="blogPhoto" id="blog-photo" accept="image/png, image/gif, image/jpeg"
             @change="fileChange">
-          <button class="preview" :class="{ 'button-inactive': !blogPhotoFileURL}" @click="openPreview">Preview Photo</button>
+          <button class="preview" :class="{ 'button-inactive': !blogPhotoFileURL }" @click="openPreview">Preview
+            Photo</button>
           <span>File Chosen: {{ blogPhotoName }} </span>
         </div>
       </div>
 
       <div class="editor">
-        <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler />
+        <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler
+          @Image-added="imageHandler" />
       </div>
 
       <div class="blog-actions">
@@ -36,9 +38,10 @@
 </template>
 
 <script setup>
-import { ref,  computed } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex"
 import BlogCoverPreview from "../components/BlogCoverPreview.vue";
+import { uploadBlogPhoto, getDownloadURL } from "../services/post"
 
 import Quill from "quill"
 import ImageResize from '@taoqf/quill-image-resize-module';
@@ -83,11 +86,32 @@ function fileChange() {
   const fileName = file.value.name
 
   $store.commit("fileNameChange", fileName)
-  $store.commit("createFileURL", URL.createObjectURL(file.value))  
+  $store.commit("createFileURL", URL.createObjectURL(file.value))
 }
 
 function openPreview() {
-    $store.commit("openPhotoPreview");
+  $store.commit("openPhotoPreview");
+}
+
+function imageHandler(file, Editor, cursorLocation, resetUploader) {
+  const upload = uploadBlogPhoto(file)
+
+  upload.on(
+    "state_changed",
+    (snapshot) => {
+      console.log(snapshot);
+    },
+    (error) => {
+      console.log(error);
+    },
+    async () => {
+      const downloadURL = await getDownloadURL(upload.snapshot.ref);
+      console.log({ downloadURL })
+      Editor.insertEmbed(cursorLocation, "image", downloadURL)
+      resetUploader()
+    }
+  );
+
 }
 
 </script>
