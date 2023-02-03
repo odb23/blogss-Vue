@@ -20,6 +20,7 @@ auth.onAuthStateChanged((user) => {
   }
 });
 checkRoute();
+store.dispatch("getPosts")
 
 function checkRoute() {
   if (route.name === "Register" || route.name === "Login" || route.name === "ForgotPassword") {

@@ -1,4 +1,5 @@
 import Vuex from "vuex";
+import { getBlogPosts } from "../services/post";
 import { getCurrentUser, updateUserSettings } from "../services/user";
 
 export default new Vuex.Store({
@@ -25,6 +26,8 @@ export default new Vuex.Store({
         blogDate: "May 1, 2023",
       },
     ],
+    blogPost: [],
+    postLoaded: null,
     blogHTML: "Write your blog title here",
     blogTitle: "",
     blogPhotoName: "",
@@ -48,13 +51,13 @@ export default new Vuex.Store({
       state.blogTitle = payload;
     },
     fileNameChange(state, payload) {
-      state.blogPhotoName = payload
+      state.blogPhotoName = payload;
     },
     createFileURL(state, paylaod) {
-      state.blogPhotoFileURL = paylaod
+      state.blogPhotoFileURL = paylaod;
     },
     openPhotoPreview(state) {
-      state.blogPhotoPreview = !state.blogPhotoPreview
+      state.blogPhotoPreview = !state.blogPhotoPreview;
     },
     toggleEditPost(state, payload) {
       state.editPost = payload;
@@ -90,6 +93,9 @@ export default new Vuex.Store({
     },
     async updateUserSettings({ commit, state }) {
       await updateUserSettings(commit, state);
+    },
+    async getPosts({ state }) {
+      await getBlogPosts(state)
     },
   },
   modules: {},
