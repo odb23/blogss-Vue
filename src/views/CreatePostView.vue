@@ -1,6 +1,7 @@
 <template >
   <div class="create-post">
     <BlogCoverPreview v-show="$store.state.blogPhotoPreview" />
+    <Loading v-show="loading" />
     <div class="container">
       <div :class="{ invsible: !error }" class="err-message">
         <p>
@@ -26,10 +27,10 @@
       </div>
 
       <div class="blog-actions">
-        <button>
+        <button @click="publishBlog">
           Publish Blog
         </button>
-        <RouterLink class="router-button" :to="{name: 'PostPreview'}">
+        <RouterLink class="router-button" :to="{ name: 'PostPreview' }">
           Post Preview
         </RouterLink>
       </div>
@@ -40,8 +41,10 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useStore } from "vuex"
+import { useRouter } from "vue-router";
 import BlogCoverPreview from "../components/BlogCoverPreview.vue";
-import { uploadBlogPhoto, getDownloadURL } from "../services/post"
+import Loading from "../components/Loading.vue"
+import { uploadBlogPhoto, getDownloadURL, uploadBlogCoverPhoto, uploadBlogPost } from "../services/post"
 
 import Quill from "quill"
 import ImageResize from '@taoqf/quill-image-resize-module';
@@ -53,12 +56,12 @@ Quill.register('modules/imageResize', ImageResize);
 // })()
 window.Quill = Quill
 
-
 const $store = useStore()
+const $router = useRouter()
 
 const blogPhoto = ref(null)
-
 const file = ref(null)
+const loading = ref(false)
 const error = ref(false);
 const errorMessage = ref(null);
 const editorSettings = ref({
@@ -93,6 +96,68 @@ function openPreview() {
   $store.commit("openPhotoPreview");
 }
 
+function publishBlog() {
+  if (blogTitle.value.length !== 0 && blogHTML.value.length !== 0) {
+    if (file.value) {
+      loading.value = true
+
+      const upload = uploadBlogCoverPhoto($store.state.blogPhotoName, file.value);
+
+      upload.on("state_changed",
+        (snapshot) => {
+          console.log(snapshot)
+        },
+        (error) => {
+          showErrorMessage("Error occurred while uploading over photo!")
+          console.log(error)
+        },
+        async () => {
+          uploadblogPostDoc(upload)
+        })
+      return
+    }
+
+    showErrorMessage("Please ensure you uploaded a cover photo")
+    return
+  }
+
+  showErrorMessage("Please ensure Blog Title & Blog Post has been filled!")
+}
+
+async function uploadblogPostDoc(upload) {
+  try {
+    const coverPhotoURL = await getDownloadURL(upload.snapshot.ref);
+    const timestamp = await Date.now();
+
+    await uploadBlogPost({
+      blogHTML: blogHTML.value,
+      blogCoverPhoto: coverPhotoURL,
+      blogCoverPhotoName: blogCoverPhotoName,
+      blogTitle: blogTitle.value,
+      profileId: profileId.value,
+      date: timestamp
+    })
+
+    loading.value = false
+    await $router.push({ name: "ViewBlog" })
+
+  } catch (error) {
+    showErrorMessage("Error occurred while publishing blog")
+    console.log(error)
+  }
+}
+
+function showErrorMessage(message) {
+  loading.value = false
+  error.value = true
+  errorMessage.value = message
+
+  setTimeout(() => {
+    error.value = false
+    errorMessage.value = ""
+  }, 5000)
+}
+
 function imageHandler(file, Editor, cursorLocation, resetUploader) {
   const upload = uploadBlogPhoto(file)
 
@@ -106,7 +171,6 @@ function imageHandler(file, Editor, cursorLocation, resetUploader) {
     },
     async () => {
       const downloadURL = await getDownloadURL(upload.snapshot.ref);
-      console.log({ downloadURL })
       Editor.insertEmbed(cursorLocation, "image", downloadURL)
       resetUploader()
     }

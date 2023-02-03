@@ -1,95 +1,103 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import BlogView from '../views/BlogsView.vue'
-import LoginView from "../views/LoginView.vue"
-import Registerview from "../views/RegisterView.vue"
-import ForgotPasswordView from "../views/ForgotPasswordView.vue"
-import ProfileView from "../views/ProfileView.vue"
-import AdminView from "../views/AdminView.vue"
-import CreatePostView from "../views/CreatePostView.vue"
-import BlogPreview from "../views/BlogPreview.vue"
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import BlogView from "../views/BlogsView.vue";
+import LoginView from "../views/LoginView.vue";
+import Registerview from "../views/RegisterView.vue";
+import ForgotPasswordView from "../views/ForgotPasswordView.vue";
+import ProfileView from "../views/ProfileView.vue";
+import AdminView from "../views/AdminView.vue";
+import CreatePostView from "../views/CreatePostView.vue";
+import BlogPreview from "../views/BlogPreview.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'Home',
+      path: "/",
+      name: "Home",
       component: HomeView,
       meta: {
-        title: "Home"
-      }
+        title: "Home",
+      },
     },
     {
-      path: '/blogs',
-      name: 'Blogs',
+      path: "/blogs",
+      name: "Blogs",
       component: BlogView,
       meta: {
-        title: "Blogs"
-      }
+        title: "Blogs",
+      },
     },
     {
-      path: '/login',
-      name: 'Login',
+      path: "/login",
+      name: "Login",
       component: LoginView,
       meta: {
-        title: "Login"
-      }
+        title: "Login",
+      },
     },
     {
-      path: '/register',
-      name: 'Register',
+      path: "/register",
+      name: "Register",
       component: Registerview,
       meta: {
-        title: "Register"
-      }
+        title: "Register",
+      },
     },
     {
-      path: '/forgot-password',
-      name: 'ForgotPassword',
+      path: "/forgot-password",
+      name: "ForgotPassword",
       component: ForgotPasswordView,
       meta: {
-        title: "Forgot Password"
-      }
+        title: "Forgot Password",
+      },
     },
     {
-      path: '/profile',
-      name: 'Profile',
+      path: "/profile",
+      name: "Profile",
       component: ProfileView,
       meta: {
-        title: "My Profile"
-      }
+        title: "My Profile",
+      },
     },
     {
-      path: '/admin',
-      name: 'Admin',
+      path: "/admin",
+      name: "Admin",
       component: AdminView,
       meta: {
-        title: "Manage Admins"
-      }
+        title: "Manage Admins",
+      },
     },
     {
-      path: '/create-post',
-      name: 'CreatePost',
+      path: "/create-post",
+      name: "CreatePost",
       component: CreatePostView,
       meta: {
-        title: "Create Post"
-      }
+        title: "Create Post",
+      },
     },
     {
       path: "/post-preview",
       name: "PostPreview",
       component: BlogPreview,
       meta: {
-        title: "Preview Blog Post"
-      }
-    }
-  ]
+        title: "Preview Blog Post",
+      },
+    },
+    {
+      path: "/view-blog",
+      name: "ViewBlog",
+      component: ViewBlog,
+      meta: {
+        title: "View Blog Post",
+      },
+    },
+  ],
 });
 
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} | ODBlogss`;
-  next()
-})
+  next();
+});
 
-export default router
+export default router;
