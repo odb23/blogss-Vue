@@ -4,29 +4,7 @@ import { getCurrentUser, updateUserSettings } from "../services/user";
 
 export default new Vuex.Store({
   state: {
-    sampleBlogCards: [
-      {
-        blogTitle: "Blog Card #1",
-        blogCoverPhoto: "stock-1",
-        blogDate: "May 1, 2023",
-      },
-      {
-        blogTitle: "Blog Card #2",
-        blogCoverPhoto: "stock-2",
-        blogDate: "May 1, 2023",
-      },
-      {
-        blogTitle: "Blog Card #3",
-        blogCoverPhoto: "stock-3",
-        blogDate: "May 1, 2023",
-      },
-      {
-        blogTitle: "Blog Card #4",
-        blogCoverPhoto: "stock-4",
-        blogDate: "May 1, 2023",
-      },
-    ],
-    blogPost: [],
+    blogPosts: [],
     postLoaded: null,
     blogHTML: "Write your blog title here",
     blogTitle: "",
@@ -42,6 +20,13 @@ export default new Vuex.Store({
     profileUsername: null,
     profileId: null,
     profileInitials: null,
+  },getters: { 
+    blogPostFeeds(state) {
+      return state.blogPosts.slice(0,2);
+    },
+    blogPostCards(state) {
+      return state.blogPosts.slice(2,6);
+    }
   },
   mutations: {
     newBlogPost(state, payload) {

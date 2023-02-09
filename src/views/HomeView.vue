@@ -16,33 +16,21 @@ let welcomeScreen = reactive({
   photo: "coding",
 })
 
-let smapleBlogPosts = reactive([
-  {
-    title: "This is a Filler Title!",
-    blogHTML: "This is a filler blog post title",
-    blogCoverPhoto: "beautiful-stories",
-  },
-  {
-    title: "This is a Filler Title!",
-    blogHTML: "This is a filler blog post title",
-    blogCoverPhoto: "designed-for-everyone",
-  }
-])
-
-let sampleBlogCards = computed(( ) => $store.state.sampleBlogCards)
+let blogCards = computed(( ) => $store.getter.blogPostCards)
+let blogPostFeeds = computed(( ) => $store.getter.blogPostFeeds)
 let user = computed(() => $store.state.user)
 </script>
 
 <template>
   <main>
     <BlogPost v-if="!user" :post="welcomeScreen" />
-    <BlogPost v-for="(post, idx) in smapleBlogPosts" :key="idx" :post="post" />
+    <BlogPost v-for="(post, idx) in blogPostFeeds" :key="idx" :post="post" />
 
     <div class="blog-card-wrap">
       <div class="container">
         <h3>View More Recent Blogs</h3>
         <div class="blog-cards">
-          <BlogCard v-for="( post, index) in sampleBlogCards" :key="index" :post="post" />
+          <BlogCard v-for="( post, index) in blogCards" :key="index" :post="post" />
         </div>
       </div>
     </div>

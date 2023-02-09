@@ -6,7 +6,7 @@
             <input type="checkbox" v-model="editPost">
         </div>
 
-        <BlogCard v-for="( post, index) in sampleBlogCards" :key="index" :post="post" />
+        <BlogCard v-for="( post, index) in blogPosts" :key="index" :post="post" />
        
     </div>
    </div>
@@ -18,7 +18,7 @@ import { useStore } from 'vuex';
 
 const store = useStore() 
 
-let sampleBlogCards = computed(()=> store.state.sampleBlogCards)
+let blogPosts = computed(()=> store.state.blogPosts)
 let editPost = computed({
     get() {
         return store.state.editPost

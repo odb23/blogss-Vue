@@ -11,7 +11,9 @@
         <img :src="imageURL" alt="coverPhoto" class="coverPhoto">
         <div class="info">
             <h1>{{ post.blogTitle }}</h1>
-            <h6>Posted on: {{ post.blogDate }}</h6>
+            <h6>Posted on: {{ new Date(post.blogDate).toLocaleString('en', {
+                dateStyle: 'long'
+            }) }}</h6>
             <RouterLink class="link" to="#">
                 View The Post
                 <img  alt="" class="arrow" :src="Arrow">
