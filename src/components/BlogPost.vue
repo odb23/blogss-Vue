@@ -12,7 +12,7 @@
                     Login/Register
                     <img :src="arrow" alt="arrow" class="arrow arrow-light" />
                 </RouterLink>
-                <RouterLink to="#" v-else class="link">
+                <RouterLink :to="{ name: 'ViewBlog', params: { blogid: post.blogId } }" v-else class="link">
                     View The Post
                     <img :src="arrow" alt="arrow" class="arrow" />
                 </RouterLink>

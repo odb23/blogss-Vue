@@ -21,7 +21,7 @@ const blogHTML = computed(() => $store.state.blogHTML)
 const blogCoverPhoto = computed(() => $store.state.blogCoverPhotoFileURL)
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     .post-view {
         min-height: 100%;
 

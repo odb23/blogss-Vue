@@ -38,7 +38,7 @@ watch(route, function () {
 
 <template>
   <div class="app-wrapper">
-    <div class="app">
+    <div class="app" v-if="store.state.postLoaded">
       <Navigation v-if="!navigationDisabled" />
       <RouterView />
       <Footer v-if="!navigationDisabled" />

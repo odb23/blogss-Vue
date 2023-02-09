@@ -112,7 +112,8 @@ function publishBlog() {
           console.log(error)
         },
         async () => {
-          uploadblogPostDoc(upload)
+          await uploadblogPostDoc(upload)
+
         })
       return
     }
@@ -129,7 +130,7 @@ async function uploadblogPostDoc(upload) {
     const coverPhotoURL = await getDownloadURL(upload.snapshot.ref);
     const timestamp = await Date.now();
 
-    await uploadBlogPost({
+    const blogId = await uploadBlogPost({
       blogHTML: blogHTML.value,
       blogCoverPhoto: coverPhotoURL,
       blogCoverPhotoName: blogCoverPhotoName,
@@ -138,8 +139,10 @@ async function uploadblogPostDoc(upload) {
       date: timestamp
     })
 
+
+    await $store.dispatch("getPost");
     loading.value = false
-    await $router.push({ name: "ViewBlog" })
+    await $router.push({ name: "ViewBlog", params: {blogid: blogId}})
 
   } catch (error) {
     showErrorMessage("Error occurred while publishing blog")

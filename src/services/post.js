@@ -37,6 +37,8 @@ async function uploadBlogPost(post) {
       ...post,
     });
   } catch (error) {}
+
+  return blogId;
 }
 
 async function getBlogPosts(state) {
