@@ -7,6 +7,9 @@ import {
   setDoc,
   getDocs,
   orderBy,
+  getDoc,
+  deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 const BLOG_PHOTO_PATH = "documents/blogPostPhotos/";
@@ -52,12 +55,32 @@ async function getBlogPosts(state) {
       const blogData = doc.data();
 
       state.blogPosts.push({
-        ...blogData
+        ...blogData,
       });
     }
   });
 
-  state.postLoaded = true
+  state.postLoaded = true;
+}
+
+async function deletePost(commit, postId) {
+  try {
+    await deleteDoc(doc(db, BLOG_PATH, postId));
+    commit("filterBlogPost", postId)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function updatePost ( post) {
+  const {blogId, ...postData} = post
+  try {
+    await updateDoc(doc(db, BLOG_PATH, blogId), {
+      ...postData
+    })
+  } catch (err) {
+
+  }
 }
 
 export {
@@ -66,4 +89,6 @@ export {
   uploadBlogCoverPhoto,
   uploadBlogPost,
   getBlogPosts,
+  deletePost,
+  updatePost
 };

@@ -1,10 +1,10 @@
 <template>
     <div class="blog-card">
         <div class="icons" v-show="editPost">
-            <div class="icon">
+            <div class="icon" @click="editBlogPost">
                 <img alt="" class="edit" :src="Edit">
             </div>
-            <div class="icon">
+            <div class="icon" @click="deletePost">
                 <img alt="" class="delete" :src="Delete">
             </div>
         </div>
@@ -28,16 +28,23 @@
 import Arrow from "../assets/Icons/arrow-right-light.svg"
 import Edit from "../assets/Icons/edit-regular.svg"
 import Delete from "../assets/Icons/trash-regular.svg"
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { computed } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps(['post'])
 const imageURL = new URL(`../assets/blogCards/${props.post.blogCoverPhoto}.jpg`, import.meta.url).href
 const store = useStore()
+const router = useRouter()
 
 let editPost = computed(() => store.state.editPost)
 
+function deletePost (){
+    store.dispatch("deletePost", props.post.blogId)
+}
+function editBlogPost () {
+    router.push({name: "EditBlog", params: {blogid: props.post.blogId}})
+}
 </script>
 
 <style lang="scss" scoped >

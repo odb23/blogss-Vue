@@ -1,5 +1,5 @@
 import Vuex from "vuex";
-import { getBlogPosts } from "../services/post";
+import { deletePost, getBlogPosts } from "../services/post";
 import { getCurrentUser, updateUserSettings } from "../services/user";
 
 export default new Vuex.Store({
@@ -47,6 +47,15 @@ export default new Vuex.Store({
     toggleEditPost(state, payload) {
       state.editPost = payload;
     },
+    setBlogState (state, payload) {
+      state.blogTitle = payload.blogTitle;
+      state.blogHTML = payload.blogHTML;
+      state.blogPhotoFileURL = payload.blogPhotoFileURL
+      state.blogPhotoName = payload.blogPhotoName
+    },
+    filterBlogPost (state, payload) {
+      state.blogPosts = state.blogPosts.filter(p => p.blogId !== payload)
+    },
     updateUser(state, payload) {
       state.user = payload;
     },
@@ -82,6 +91,13 @@ export default new Vuex.Store({
     async getPosts({ state }) {
       await getBlogPosts(state)
     },
+    async updatePost({commit, dispatch}, payload) {
+      commit("filterBlogPost", payload)
+      await dispatch("getPosts")
+    },
+    async deletePost({commit}, payload) {
+      await deletePost(commit, payload)
+    }
   },
   modules: {},
 });
